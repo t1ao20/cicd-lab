@@ -25,10 +25,35 @@ jobs:
         run: npm ci
 
       - name: TypeScript typecheck
-        run: npm run typecheck
+        run: |
+          npm run typecheck || {
+            {
+              echo "### TypeScript typecheck failed"
+              echo ""
+              echo "How to fix locally:"
+              echo '```bash'
+              echo "npm run typecheck"
+              echo '```'
+              echo "Then fix reported TypeScript errors and push again."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          }
 
       - name: Prettier check
-        run: npm run format:check
+        run: |
+          npm run format:check || {
+            {
+              echo "### Prettier check failed"
+              echo ""
+              echo "How to fix locally:"
+              echo '```bash'
+              echo "npm run format"
+              echo "npm run format:check"
+              echo '```'
+              echo "Commit formatting changes and push again."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          }
 
       - name: Run tests
         run: |
