@@ -29,8 +29,10 @@ jobs:
       # -------------------------
       - name: TypeScript typecheck
         run: |
+          set +e
           TS_OUTPUT=$(NO_COLOR=1 npm run typecheck 2>&1)
           EXIT_CODE=$?
+          set -e
 
           if [ $EXIT_CODE -eq 0 ]; then
             echo "### ✅ TypeScript typecheck passed" >> "$GITHUB_STEP_SUMMARY"
