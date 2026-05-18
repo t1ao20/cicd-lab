@@ -24,31 +24,56 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # -------------------------
+      # TypeScript Check
+      # -------------------------
       - name: TypeScript typecheck
-        if: always()
         run: |
-          if npm run typecheck; then
+          TS_OUTPUT=$(NO_COLOR=1 npm run typecheck 2>&1)
+          EXIT_CODE=$?
+
+          if [ $EXIT_CODE -eq 0 ]; then
             echo "### ✅ TypeScript typecheck passed" >> "$GITHUB_STEP_SUMMARY"
           else
             {
               echo "### ❌ TypeScript typecheck failed"
-              echo 'Run `npm run typecheck` locally, fix the reported errors, then push again.'
+              echo ""
+              echo "#### Full output:"
+              echo '```text'
+              echo "$TS_OUTPUT"
+              echo '```'
+              echo ""
+              echo "Run \`npm run typecheck\` locally and fix all errors."
             } >> "$GITHUB_STEP_SUMMARY"
+
             exit 1
           fi
 
+      # -------------------------
+      # Prettier Check
+      # -------------------------
       - name: Prettier check
-        if: always()
         run: |
-          if npm run format:check; then
+          FORMAT_OUTPUT=$(npm run format:check 2>&1)
+          EXIT_CODE=$?
+
+          if [ $EXIT_CODE -eq 0 ]; then
             echo "### ✅ Prettier check passed" >> "$GITHUB_STEP_SUMMARY"
           else
             {
               echo "### ❌ Prettier check failed"
-              echo 'Run `npm run format` and then `npm run format:check`, commit changes, then push again.'
+              echo ""
+              echo "#### Full output:"
+              echo '```text'
+              echo "$FORMAT_OUTPUT"
+              echo '```'
+              echo ""
+              echo "Run \`npm run format\` then commit changes."
             } >> "$GITHUB_STEP_SUMMARY"
+
             exit 1
           fi
+
 
       - name: Run tests
         run: |
