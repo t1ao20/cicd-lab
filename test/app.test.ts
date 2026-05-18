@@ -22,8 +22,7 @@ describe('Fastify app', () => {
     });
 
     expect(response.statusCode).toBe(200);
-    // Intentional failure: expect the wrong message to trigger test failure
-    expect(response.json().message).toBe('intentional-wrong-message');
+    expect(response.json().message).toBe('CI/CD Lab Fastify app is running');
     await app.close();
   });
 });
