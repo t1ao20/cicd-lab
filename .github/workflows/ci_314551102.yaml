@@ -53,9 +53,12 @@ jobs:
       # Prettier Check
       # -------------------------
       - name: Prettier check
+        if: always()
         run: |
+          set +e
           FORMAT_OUTPUT=$(npm run format:check 2>&1)
           EXIT_CODE=$?
+          set -e
 
           if [ $EXIT_CODE -eq 0 ]; then
             echo "### ✅ Prettier check passed" >> "$GITHUB_STEP_SUMMARY"
