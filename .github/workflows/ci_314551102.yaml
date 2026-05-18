@@ -80,6 +80,7 @@ jobs:
           fi
 
       - name: Run tests
+        if: always()
         run: |
           mkdir -p reports
           npm test
