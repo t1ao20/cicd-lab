@@ -92,10 +92,3 @@ jobs:
           name: Vitest Results
           path: reports/junit.xml
           reporter: java-junit
-
-      - name: Upload Test Artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: reports/
