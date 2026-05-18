@@ -43,9 +43,3 @@ jobs:
           name: Vitest Results
           path: reports/junit.xml
           reporter: java-junit
-
-      - name: Add Summary
-        if: always()
-        run: |
-          echo "## Test Report Generated" >> $GITHUB_STEP_SUMMARY
-          echo "See the Tests tab below." >> $GITHUB_STEP_SUMMARY
