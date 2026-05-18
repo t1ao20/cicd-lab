@@ -32,7 +32,7 @@ jobs:
           else
             {
               echo "### ❌ TypeScript typecheck failed"
-              echo "Run `npm run typecheck` locally, fix the reported errors, then push again."
+              echo 'Run `npm run typecheck` locally, fix the reported errors, then push again.'
             } >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
@@ -45,7 +45,7 @@ jobs:
           else
             {
               echo "### ❌ Prettier check failed"
-              echo "Run `npm run format` and then `npm run format:check`, commit changes, then push again."
+              echo 'Run `npm run format` and then `npm run format:check`, commit changes, then push again.'
             } >> "$GITHUB_STEP_SUMMARY"
             exit 1
           fi
