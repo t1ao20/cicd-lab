@@ -1,6 +1,5 @@
 name: CI_314551102
 
-
 on:
   push:
     branches: [main, feature/a]
