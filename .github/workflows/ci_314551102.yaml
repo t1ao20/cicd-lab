@@ -25,35 +25,30 @@ jobs:
         run: npm ci
 
       - name: TypeScript typecheck
+        if: always()
         run: |
-          npm run typecheck || {
+          if npm run typecheck; then
+            echo "### ✅ TypeScript typecheck passed" >> "$GITHUB_STEP_SUMMARY"
+          else
             {
-              echo "### TypeScript typecheck failed"
-              echo ""
-              echo "How to fix locally:"
-              echo '```bash'
-              echo "npm run typecheck"
-              echo '```'
-              echo "Then fix reported TypeScript errors and push again."
+              echo "### ❌ TypeScript typecheck failed"
+              echo "Run `npm run typecheck` locally, fix the reported errors, then push again."
             } >> "$GITHUB_STEP_SUMMARY"
             exit 1
-          }
+          fi
 
       - name: Prettier check
+        if: always()
         run: |
-          npm run format:check || {
+          if npm run format:check; then
+            echo "### ✅ Prettier check passed" >> "$GITHUB_STEP_SUMMARY"
+          else
             {
-              echo "### Prettier check failed"
-              echo ""
-              echo "How to fix locally:"
-              echo '```bash'
-              echo "npm run format"
-              echo "npm run format:check"
-              echo '```'
-              echo "Commit formatting changes and push again."
+              echo "### ❌ Prettier check failed"
+              echo "Run `npm run format` and then `npm run format:check`, commit changes, then push again."
             } >> "$GITHUB_STEP_SUMMARY"
             exit 1
-          }
+          fi
 
       - name: Run tests
         run: |
