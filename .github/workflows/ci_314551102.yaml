@@ -77,7 +77,6 @@ jobs:
             exit 1
           fi
 
-
       - name: Run tests
         run: |
           mkdir -p reports
